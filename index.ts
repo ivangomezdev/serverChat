@@ -28,7 +28,7 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static("dist"));
 //Crear Room en caso de que no exista
 app.post("/rooms", (req, res) => {
   const bodyData = req.body;
