@@ -24,25 +24,26 @@ const app = express();
 const rtdb = getDatabase();
 let idRoom = "";
 
+const port = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
-
 
 //Crear Room en caso de que no exista
 app.post("/rooms", (req, res) => {
   const bodyData = req.body;
-  
+
   const roomRefRTDB = ref(database, "rooms/");
-  
+
   const newStarCountRef = push(roomRefRTDB);
   const rtdbId = newStarCountRef.key;
   console.log(rtdbId);
-  
+
   bodyData.roomID = rtdbId;
-  
+
   const shortId = 1000 + Math.floor(Math.random() * 999);
   const roomRefDb = doc(dbFirestore, "users", shortId.toString());
-  
+
   setDoc(roomRefDb, {
     email: bodyData.email,
     owner: bodyData.name,
@@ -51,7 +52,7 @@ app.post("/rooms", (req, res) => {
     return i;
   });
   set(newStarCountRef, { messages: { ownerId: shortId } });
-  res.status(200).json(shortId)
+  res.status(200).json(shortId);
 });
 
 //ingresar al room en caso de saber la ID
@@ -75,7 +76,7 @@ app.post("/rooms/:id", (req, res) => {
       console.log("El room indicado no existe", id);
     }
 
-    res.status(200).json(id,"esta es la ID");
+    res.status(200).json(id);
   });
 });
 
@@ -90,7 +91,6 @@ app.post("/rooms/chat/:id", (req, res) => {
   res.status(200).json(newMessage);
 });
 
-
-app.listen("3000", () => {
+app.listen(port, () => {
   console.log("server ok");
 });
