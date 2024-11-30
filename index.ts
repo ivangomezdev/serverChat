@@ -6,7 +6,7 @@ import {
   update,
   push,
 } from "firebase/database";
-import { database, dbFirestore } from "./db";
+import { database, dbFirestore } from "./src/db";
 import {
   addDoc,
   collection,
