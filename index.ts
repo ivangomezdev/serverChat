@@ -75,7 +75,7 @@ app.post("/rooms/:id", (req, res) => {
       console.log("El room indicado no existe", id);
     }
 
-    res.status(200).json(id);
+    res.status(200).json(id,"esta es la ID");
   });
 });
 
